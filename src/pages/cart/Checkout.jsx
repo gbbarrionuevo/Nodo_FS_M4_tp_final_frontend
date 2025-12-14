@@ -246,8 +246,7 @@ const Checkout = () => {
 
             <Link
               to="/cart/detail"
-              className="block w-full bg-gray-600 hover:bg-gray-700 text-white disabled:opacity-40 text-center py-3 rounded-xl shadow-xl font-bold mt-4 transition"
-              disabled={loading}
+              className={`block w-full bg-gray-600 text-white text-center py-3 rounded-xl shadow-xl font-bold mt-4 ${loading ? 'opacity-40 pointer-events-none' : 'hover:bg-gray-700'}`}
             >
               Volver al carrito
             </Link>
