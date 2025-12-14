@@ -49,7 +49,7 @@ const RolesAdmin = () => {
           }
 
           ${hasPermission("delete:role")
-            ? `button
+            ? `<button
                   class="btn-role-delete"
                   data-id="${r._id}"
                   style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
