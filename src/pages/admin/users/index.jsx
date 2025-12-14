@@ -33,14 +33,17 @@ const UsersAdmin = () => {
         `,
         accion: isDeleted
           ? `
-            <button
-              class="btn-user-restore"
-              data-id="${u._id}"
-              style="background:#16a34a; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              title="Restaurar"
-            >
-              <i class='bi bi-arrow-counterclockwise'></i>
-            </button>
+            ${hasPermission("restore:user")
+              ? `<button
+                class="btn-user-restore"
+                data-id="${u._id}"
+                style="background:#16a34a; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                title="Restaurar"
+              >
+                <i class='bi bi-arrow-counterclockwise'></i>
+              </button>`
+              : ""
+            }
           `
           : `
           <div style="display:flex; gap:8px;">
@@ -53,7 +56,7 @@ const UsersAdmin = () => {
             </button>
 
           ${hasPermission("update:user")
-            ? ` <button
+            ? `<button
                   style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
                   onclick="window.location.href='/administration/users/${u._id}/edit'"
                   title="Editar"
