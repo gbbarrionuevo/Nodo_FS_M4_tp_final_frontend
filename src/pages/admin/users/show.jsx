@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useUsersCrud } from '../../../hooks/useUsersCrud.js';
 import { ENDPOINTS } from '../../../api/endpoints.js';
 import { useToast } from '../../../context/ToastContext.jsx';
 import PageTransition from '../../../components/PageTransition.jsx';
 
 const UsersAdminShow = () => {
+  const { hasPermission } = useAuth();
   const { id } = useParams();
   const { loading, show } = useUsersCrud();
   const { notify } = useToast();
@@ -85,12 +87,14 @@ const UsersAdminShow = () => {
                 Volver
               </Link>
 
-              <Link
-                to={`/administration/users/${id}/edit`}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
-              >
-                Editar
-              </Link>
+              {hasPermission("update:user") && (
+                <Link
+                  to={`/administration/users/${id}/edit`}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
+                >
+                  Editar
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useRolesCrud } from '../../../hooks/useRolesCrud.js';
 import { useToast } from '../../../context/ToastContext.jsx';
 import PageTransition from '../../../components/PageTransition.jsx';
 
 const RolesAdminShow = () => {
+  const { hasPermission } = useAuth();
   const { id } = useParams();
   const { loading, show } = useRolesCrud();
   const { notify } = useToast();
@@ -66,12 +68,14 @@ const RolesAdminShow = () => {
                 Volver
               </Link>
 
-              <Link
-                to={`/administration/roles/${id}/edit`}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
-              >
-                Editar
-              </Link>
+              {hasPermission("update:role") && (
+                <Link
+                  to={`/administration/roles/${id}/edit`}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
+                >
+                  Editar
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useRolesCrud } from '../../../hooks/useRolesCrud.js';
 import DataTable from '../../../components/DataTable';
 
 const RolesAdmin = () => {
+  const { hasPermission } = useAuth();
   const { allData, loading, remove } = useRolesCrud();
 
   const columns = [
@@ -35,22 +37,29 @@ const RolesAdmin = () => {
               <i class='bi bi-search'></i>
             </button>
 
-            <button
-              style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              onclick="window.location.href='/administration/roles/${r._id}/edit'"
-              title="Editar"
-            >
-              <i class='bi bi-pen'></i>
-            </button>
+          ${hasPermission("update:role")
+            ? `<button
+                  style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  onclick="window.location.href='/administration/roles/${r._id}/edit'"
+                  title="Editar"
+                >
+                  <i class='bi bi-pen'></i>
+                </button>`
+            : ""
+          }
 
-            <button
-              class="btn-role-delete"
-              data-id="${r._id}"
-              style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              title="Eliminar"
-            >
-              <i class='bi bi-x'></i>
-            </button>
+          ${hasPermission("delete:role")
+            ? `button
+                  class="btn-role-delete"
+                  data-id="${r._id}"
+                  style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  title="Eliminar"
+                >
+                  <i class='bi bi-x'></i>
+                </button>`
+            : ""
+          }
+
           </div>
         `
       };
@@ -81,12 +90,14 @@ const RolesAdmin = () => {
             Roles
           </h2>
 
-          <Link
-            to="/administration/roles/create"
-            className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl shadow-xl transition"
-          >
-            Crear rol
-          </Link>
+          {hasPermission("create:role") && (
+            <Link
+              to="/administration/roles/create"
+              className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl shadow-xl transition"
+            >
+              Crear rol
+            </Link>
+          )}
         </div>
 
         <DataTable data={data} columns={columns} />

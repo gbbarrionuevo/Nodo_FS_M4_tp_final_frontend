@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useContactsCrud } from '../../../hooks/useContactsCrud.js';
 import DataTable from '../../../components/DataTable';
 
 const ContactsAdmin = () => {
+  const { hasPermission } = useAuth();
   const { allData, loading, remove } = useContactsCrud();
 
   const columns = [
@@ -30,14 +32,18 @@ const ContactsAdmin = () => {
               <i class='bi bi-search'></i>
             </button>
 
-            <button
-              class="btn-contact-delete"
-              data-id="${c._id}"
-              style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              title="Eliminar"
-            >
-              <i class='bi bi-x'></i>
-            </button>
+          ${hasPermission("delete:contact")
+            ? `<button
+                  class="btn-contact-delete"
+                  data-id="${c._id}"
+                  style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  title="Eliminar"
+                >
+                  <i class='bi bi-x'></i>
+                </button>`
+            : ""
+          }
+
           </div>
         `
       };

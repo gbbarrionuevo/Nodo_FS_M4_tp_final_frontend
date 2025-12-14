@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useCardsCrud } from '../../../hooks/useCardsCrud.js';
 import DataTable from '../../../components/DataTable';
 
 const CardsAdmin = () => {
+  const { hasPermission } = useAuth();
   const { allData, loading, remove } = useCardsCrud();
 
   const columns = [
@@ -32,22 +34,29 @@ const CardsAdmin = () => {
               <i class='bi bi-search'></i>
             </button>
 
-            <button
-              style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              onclick="window.location.href='/administration/cards/${c._id}/edit'"
-              title="Editar"
-            >
-              <i class='bi bi-pen'></i>
-            </button>
+          ${hasPermission("update:card")
+            ? `<button
+                  style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  onclick="window.location.href='/administration/cards/${c._id}/edit'"
+                  title="Editar"
+                >
+                  <i class='bi bi-pen'></i>
+                </button>`
+            : ""
+          }
 
-            <button
-              class="btn-card-delete"
-              data-id="${c._id}"
-              style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              title="Eliminar"
-            >
-              <i class='bi bi-x'></i>
-            </button>
+          ${hasPermission("delete:card")
+            ? `<button
+                  class="btn-card-delete"
+                  data-id="${c._id}"
+                  style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  title="Eliminar"
+                >
+                  <i class='bi bi-x'></i>
+                </button>`
+            : ""
+          }
+
           </div>
         `
       };

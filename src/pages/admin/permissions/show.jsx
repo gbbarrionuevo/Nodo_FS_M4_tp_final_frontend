@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { usePermissionsCrud } from '../../../hooks/usePermissionsCrud.js';
 import { useToast } from '../../../context/ToastContext.jsx';
 import PageTransition from '../../../components/PageTransition.jsx';
 
 const PermissionsAdminShow = () => {
+  const { hasPermission } = useAuth();
   const { id } = useParams();
   const { loading, show } = usePermissionsCrud();
   const { notify } = useToast();
@@ -57,12 +59,14 @@ const PermissionsAdminShow = () => {
                 Volver
               </Link>
 
-              <Link
-                to={`/administration/permissions/${id}/edit`}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
-              >
-                Editar
-              </Link>
+              {hasPermission("update:permission") && (
+                <Link
+                  to={`/administration/permissions/${id}/edit`}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow transition w-full text-center"
+                >
+                  Editar
+                </Link>
+              )}
             </div>
           </div>
         </div>

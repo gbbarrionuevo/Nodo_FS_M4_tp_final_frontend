@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { useUsersCrud } from '../../../hooks/useUsersCrud.js';
 import DataTable from '../../../components/DataTable';
 
 const UsersAdmin = () => {
+  const { hasPermission } = useAuth();
   const { allData, loading, remove, restore } = useUsersCrud();
 
   const columns = [
@@ -50,22 +52,29 @@ const UsersAdmin = () => {
               <i class='bi bi-search'></i>
             </button>
 
-            <button
-              style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              onclick="window.location.href='/administration/users/${u._id}/edit'"
-              title="Editar"
-            >
-              <i class='bi bi-pen'></i>
-            </button>
+          ${hasPermission("update:user")
+            ? ` <button
+                  style="background:#3b82f6; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  onclick="window.location.href='/administration/users/${u._id}/edit'"
+                  title="Editar"
+                >
+                  <i class='bi bi-pen'></i>
+                </button>`
+            : ""
+          }
 
-            <button 
-              class="btn-user-delete"
-              data-id="${u._id}"
-              style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
-              title="Eliminar"
-            >
-              <i class='bi bi-x'></i>
-            </button>
+          ${hasPermission("delete:user")
+            ? `<button 
+                  class="btn-user-delete"
+                  data-id="${u._id}"
+                  style="background:#dc2626; color:white; padding:4px 8px; border-radius:6px; font-size:12px; cursor:pointer;"
+                  title="Eliminar"
+                >
+                  <i class='bi bi-x'></i>
+                </button>`
+            : ""
+          }
+
           </div>
         `
       };
@@ -99,12 +108,14 @@ const UsersAdmin = () => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-wide">Usuarios</h2>
 
-          <Link
-            to="/administration/users/create"
-            className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl shadow-xl transition"
-          >
-            Crear usuario
-          </Link>
+          {hasPermission("create:user") && (
+            <Link
+              to="/administration/users/create"
+              className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl shadow-xl transition"
+            >
+              Crear usuario
+            </Link>
+          )}
         </div>
 
         <DataTable data={data} columns={columns} />
