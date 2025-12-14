@@ -1,0 +1,94 @@
+/* Mostrar X registros */
+.dt-length {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--dt-text);
+}
+
+.dt-length select {
+  appearance: none;
+  padding: 8px 36px 8px 12px;
+  border-radius: 0.375rem !important;
+  border: 1px solid var(--dt-border);
+  background-color: var(--dt-bg);
+  color: var(--dt-text);
+  font-size: 0.875rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+/* Buscador */
+.dt-search {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--dt-text);
+}
+
+.dt-search input {
+  padding: 6px 10px;
+  border-radius: 0.375rem !important;
+  border: 1px solid var(--dt-border);
+  background-color: var(--dt-bg);
+  color: var(--dt-text);
+}
+
+/* Texto inferior */
+.dt-info {
+  padding-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--dt-muted);
+}
+
+/* Paginación */
+.dt-paging button {
+  border-radius: 0.375rem !important;
+  padding: 6px 14px !important;
+  margin: 2px !important;
+  background: var(--dt-btn-bg) !important;
+  color: var(--dt-btn-text) !important;
+  border: 1px solid var(--dt-btn-border) !important;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.dt-paging button:hover {
+  background: var(--dt-btn-hover) !important;
+}
+
+/* Activo */
+.dt-paging button.current {
+  background: var(--dt-primary) !important;
+  border-color: var(--dt-primary-border) !important;
+  color: white !important;
+}
+
+/* Variables */
+/* Light */
+:root {
+  --dt-bg: #ffffff;
+  --dt-border: #d1d5db;
+  --dt-text: #374151;
+  --dt-muted: #6b7280;
+
+  --dt-btn-bg: #f3f4f6;
+  --dt-btn-hover: #e5e7eb;
+  --dt-btn-border: transparent;
+  --dt-btn-text: #374151;
+
+  --dt-primary: #3b82f6;
+  --dt-primary-border: #2563eb;
+}
+
+/* Dark */
+html.dark {
+  --dt-bg: #1f2937;
+  --dt-border: #4b5563;
+  --dt-text: #e5e7eb;
+  --dt-muted: #9ca3af;
+
+  --dt-btn-bg: #374151;
+  --dt-btn-hover: #4b5563;
+  --dt-btn-border: #4b5563;
+  --dt-btn-text: #e5e7eb;
+
+  --dt-primary: #2563eb;
+  --dt-primary-border: #1d4ed8;
+}

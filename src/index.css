@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Loader */
+.pokeball {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  position: relative;
+  background: linear-gradient(to bottom, #ff1c1c 50%, #fff 50%);
+  box-shadow: inset -4px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.pokeball::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 6px);
+  left: calc(50% - 6px);
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border: 4px solid #000;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.pokeball::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 2px);
+  width: 100%;
+  height: 4px;
+  background: #000;
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 1.5s linear infinite;
+}
+
+/* Aparición con fade-in y escala */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pop-in {
+  animation: popIn 0.6s ease-out;
+}
+
+/* Captura (favoritos) estilo Pokémon */
+@keyframes capture-shake {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px) rotate(-2deg);
+  }
+
+  40% {
+    transform: translate(2px, -2px) rotate(2deg);
+  }
+
+  60% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+}
+
+@keyframes capture-flash-light {
+  0% {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes capture-flash-dark {
+  0% {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  50% {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes capture-aura {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.capture-flash {
+  position: relative;
+  overflow: hidden;
+  animation: capture-shake 0.4s ease-in-out;
+}
+
+.capture-flash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  animation: capture-flash-light 0.4s ease;
+}
+
+.dark .capture-flash::after {
+  animation: capture-flash-dark 0.4s ease;
+}
+
+.capture-flash::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+  animation: capture-aura 0.6s ease-out;
+  pointer-events: none;
+}
+
+.dark .capture-flash::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+}
